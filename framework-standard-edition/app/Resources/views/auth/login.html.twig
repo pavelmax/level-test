@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Тестирование персонала</title>
+    <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+
+        @media (min-width: 1200px) {
+            .container{
+                max-width: 20%;
+            }
+        }
+        .sign {
+            margin-top: 10%;
+        }
+        .control-label_size {
+            font-size: 18px;
+        }
+        .form-control_size {
+            font-size: 12px;
+        }
+        .checkbox-inline_right {
+            float: right;
+        }
+        .form_group_wrapper {
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container sign">
+    <a href="#" title=""><img src="{{ asset("img/logo.png") }}" class="img-responsive" alt="Тестирование персонала"></a>
+    <form action="#" method="post" class="form-horizontal">
+        <fieldset class="form-group">
+            <label for="login" class="control-label control-label_size">Имя:</label>
+            <input type="text" id="login" class="form-control form-control_size" placeholder="указанное имя при регистрации">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="password" class="control-label control-label_size">Пароль</label>
+            <input type="text" id="password" class="form-control form-control_size" placeholder="ваш пароль доступа">
+        </fieldset>
+        <fieldset class="form-group form_group_wrapper">
+            <button type="submit" class="btn btn-default">Войти</button>
+            <div class="checkbox-inline checkbox-inline_right">
+                <label>
+                    <input type="checkbox">Чужой компьютер
+                </label>
+
+            </div>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>
