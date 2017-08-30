@@ -25,4 +25,11 @@ class AdminController extends Controller
         return $this->render("admin/index.html.twig", array('htmlMenu' => $menuGenerate->generateView()));
     }
 
+    /**
+     * @Route(path="/admin/", name="dashboard_admin")
+     */
+    public function dashboardAction() {
+        return $this->render("admin/index.html.twig");
+    }
+
 }

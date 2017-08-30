@@ -5,91 +5,58 @@
 {% endblock %}
 {% block topMenu %}
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active"><a class="nav-link" href="#">Список тестов</a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{ path("home") }}">Список тестов</a></li>
     </ul>
 {% endblock %}
 {% block nav_content %}
-    <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Какой тест?">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
-    </form>
 {% endblock nav_content %}
 {% block content %}
      <div class="row">
             <section class="col-xl-8">
                 <aside class="filter">
-                    <form action="#">
-                        <div class="form-group">
-                            <input class="form-control border-top-0 form-control_without-border-radius" type="search" id="search-test" placeholder="поиск по названию теста">
+                        <div class="alert alert-info ml-2">
+                            <form class="form-inline mb-2 d-md-inline mr-2" action="{{ path("home") }}" method="post">
+                                <input class="form-control form-row" type="search" name="testName" placeholder="введите название теста...">
+                                <input class="btn btn-primary" type="submit" value="поиск">
+                            </form>
+                            сортировка по: {{ knp_pagination_sortable(pagination, 'возрастанию / убыванию', 't.ctestname') }}
+
                         </div>
-                        <div class="btn-group">
-                            <button class="btn btn-outline-primary">по возрастанию</button>
-                            <button class="btn btn-outline-primary">по убыванию</button>
-                        </div>
-                    </form>
                 </aside>
                 <ul class="list-group">
+                {% for article in pagination %}
                     <li class="list-group-item">
-                        <a href="#">Умеете ли вы защищать свой «секретный сад»?</a>
-                        <a href="#"><span class="badge badge-primary">пройти</span></a>
-                        <span class="badge bg-dark float-right">психологический</span>
-
-                        <p class="post-desc"><small>Это не физическое место – его нельзя потрогать и почувствовать. Но это очень нужная территория, которую необходимо оберегать и поддерживать в хорошем состоянии, – ваше личное пространство. Умеете ли вы обозначить эти границы в отношениях? Соблюдаете ли личные границы партнера? Ответьте на вопросы теста, чтобы проверить.</small></p>           </li>
-                    <li class="list-group-item">
-                        <a href="#">Правильный ли выбор в жизни вы сделали?</a>
-                        <a href="#"><span class="badge badge-primary">пройти</span></a>
-                        <span class="badge badge-secondary float-right">знание ФЗ</span>
-                        <p><small>Каждый из нас время от времени задается этим вопросами: ту ли профессию я выбрал? С тем ли человеком я живу? Что это – минутная слабость или серьезный повод пересмотреть жизненные приоритеты? Наш тест поможет разобраться.</small></p>
+                        <a href="{{ article.getNkey() }}">{{ article.getCtestname() }}</a>
+                        <a href="{{ article.getNkey() }}"><span class="badge badge-primary">пройти</span></a>
+                        <span class="badge bg-dark float-right">{{ article.getTypeTest().getCelementname() }}</span>
+                        <p class="post-desc"><small>{{ article.getCmessage() }}</small></p>
                     </li>
-                    <li class="list-group-item">
-                        <a href="#">Сколько у вас личностей?</a>
-                        <a href="#"><span class="badge badge-primary">пройти</span></a>
-                        <span class="badge bg-dark float-right">психологический</span>
-
-                        <p><small>Все люди разные, и кто-то всегда и везде остается верен себе и ведет себя одинаково в любых условиях, а кто-то умеет меняться и подстраиваться под обстоятельства и ситуации. Пройдите наш тест и узнайте, сколько личностей живет в вас.</small></p>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#">Позволяете ли вы манипулировать собой?</a>
-                        <a href="#"><span class="badge badge-primary">пройти</span></a>
-
-                        <p><small>Что для вас важнее – интересы других или ваши собственные? Как часто друзьям и близким удается управлять вами и повлиять на ваш выбор? Наш тест поможет разобраться.</small></p>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#">Умеете ли вы грамотно распределять время?</a>
-                        <a href="#"><span class="badge badge-primary">пройти</span></a>
-                        <p><small>Стив Джобс сказал: «Работать нужно не 12 часов, а головой». Можно каждый день трудиться сверхурочно, но все равно ничего не успевать, а можно так организовать рабочее время, что не придется засиживаться допоздна и показывать отличные результаты. Как у вас обстоят с этим дела, подскажет наш тест.</small></p>
-                    </li>
+                {% endfor %}
                 </ul>
                 <div class="row-pagination">
                     <nav aria-label="pagination">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Предыдущая</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Следующая</a></li>
-                        </ul>
+                        {{ knp_pagination_render(pagination) }}
                     </nav>
                 </div>
             </section>
-            <section class="col-xl-4">
-                <aside class="card text-white bg-dark mb-3 card__none-radius">
-                    <header class="card-header">
-                        <h5 class="card-title text-center card-title__text">Индивидульная карта</h5>
-                    </header>
-                    <footer class="card-body">
-                        <h6 class="card-title">Тимур Неронов:</h6>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item bg-dark">Организация: Элерон</li>
-                            <li class="list-group-item bg-dark">Тип пользователя: администратор</li>
-                        </ul>
-                        <div class="card-body">
-                            <a href="#" class="card-link">панель администратора</a>
-                            <a href="#" class="card-link">выйти</a>
-                        </div>
-                    </footer>
-                </aside>
-            </section>
+                <section class="col-xl-4">
+                    <aside class="card text-white bg-dark mb-3 card__none-radius">
+                        <header class="card-header">
+                            <h5 class="card-title text-center card-title__text">Индивидульная карта</h5>
+                        </header>
+                        <footer class="card-body">
+                            <h6 class="card-title">Тимур Неронов:</h6>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item bg-dark">Организация: Элерон</li>
+                                <li class="list-group-item bg-dark">Тип пользователя: администратор</li>
+                            </ul>
+                            <div class="card-body">
+                                <a href="{{ path("dashboard_admin") }}" class="card-link">панель администратора</a>
+                                <a href="{{ path("logout") }}" class="card-link">выйти</a>
+                            </div>
+                        </footer>
+                    </aside>
+                </section>
         </div>
     </main>
 {% endblock %}

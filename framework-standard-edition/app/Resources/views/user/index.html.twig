@@ -1,0 +1,121 @@
+{% extends 'layout/base.html.twig' %}
+{% block javascripts %}
+{{ parent() }}
+    <script src="{{ asset("js/bootstrap.min.js") }}"></script>
+
+{% endblock %}
+{% block nav_content %}
+{% endblock nav_content %}
+{% block topMenu%}
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active"><a class="nav-link" href="{{ path("home") }}">Список тестов</a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{ path("result") }}">Результаты тестирования</a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{ path("users") }}">Список пользователей</a></li>
+    </ul>
+{% endblock %}
+{% block content %}
+<div class="container m-auto" >
+    <aside class="filter">
+        <h5 class="mt-3 alert alert-info">Список пользователей в системе:</h5>
+        <div class="mb-5 ml-2">
+            <form class="form-inline mb-2 d-md-inline mr-2" action="{{ path("users") }}" method="post">
+                <input class="form-control form-row" type="search" name="lastname" placeholder="фамилия пользователя">
+                <input class="btn btn-primary" type="submit" value="поиск">
+            </form>
+            сортировка по: {{ knp_pagination_sortable(pagination, 'возрастанию / убыванию', 'u.cuserfamilyname') }}
+
+        </div>
+    </aside>
+    <table class="table table-responsive">
+        <tr>
+            <th>№</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчетсво</th>
+            <th>Идентификатор</th>
+            <th>Пароль</th>
+        </tr>
+        {% for article in pagination %}
+            <tr>
+                <td><span class="badge badge-dark" data-userid="{{ article.getNuserkey() }}">{{ article.getNuserkey() }}</span></td>
+                <td>{{ article.getCuserfamilyname() }}</td>
+                <td>{{ article.getCuserfirstname() }}</td>
+                <td>{{ article.getCusersurname() }}</td>
+                <td>{{ article.getCidentificator() }}</td>
+                <td>{{ article.getCpassword() }}</td>
+                <td colspan="2"><button type="button" class="mr-2 btn btn-warning btn-sm" data-toggle="modal" data-target="#changeWindow">изменить</button><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteWindow">удалить</button></td></td>
+
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="row-pagination">
+        <nav aria-label="pagination">
+            {{ knp_pagination_render(pagination) }}
+        </nav>
+    </div>
+</div>
+
+    <div id="deleteWindow" class="modal fade">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Вы действительно хотите удалить пользователя?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Вся информация будет удалена из системы. Восстановить данные невозможно.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger mr-auto">УДАЛИТЬ</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="changeWindow" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Индивидуальная карта пользователя:</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-header">
+                    <h6>Драган Александр Васильевич (admin)</h6>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-group">
+                            <label for="login" class="form-control-label">Идентификатор (логин):</label>
+                            <input type="text" class="form-control border-dark" id="login" name="login">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-control-label">Пароль:</label>
+                            <input type="password" class="form-control border-dark" id="password" name="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="form-control-label">Фамилия:</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName">
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName" class="form-control-label">Имя:</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName">
+                        </div>
+                        <div class="form-group">
+                            <label for="middleNames" class="form-control-label">Отчество:</label>
+                            <input type="text" class="form-control" id="middleNames" name="middleNames">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success mr-auto">Сохранить</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

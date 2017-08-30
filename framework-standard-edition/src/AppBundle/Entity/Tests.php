@@ -211,6 +211,13 @@ class Tests
     private $nlimittime;
 
     /**
+     * @var DictionaryStructure
+     *
+     * @ORM\ManyToOne(targetEntity="DictionaryStructure")
+     * @ORM\JoinColumn(name="nTestType", referencedColumnName="nElementKey")
+     */
+    private $typeTest;
+    /**
      * @return int
      */
     public function getNkey()
@@ -656,6 +663,14 @@ class Tests
     public function setNlimittime($nlimittime)
     {
         $this->nlimittime = $nlimittime;
+    }
+
+    /**
+     * @return DictionaryStructure
+     */
+    public function getTypeTest()
+    {
+        return $this->typeTest;
     }
 
 

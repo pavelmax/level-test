@@ -9,7 +9,9 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Users;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -18,7 +20,7 @@ class SecurityController extends Controller
 
 {
     /**
-     * @Route("/login", name="login")
+     * @Route(path="/login", name="login")
      * @param Request $request
      * @param AuthenticationUtils $authUtils
      */
@@ -26,6 +28,15 @@ class SecurityController extends Controller
     {
         $error = $authUtils->getLastAuthenticationError();
         $lastUsername = $authUtils->getLastUsername();
-        return $this->render("auth/login.html.twig", array("error" => $error, "lastUsername" => $lastUsername));
+
+
+        return $this->render("auth/login.html.twig", array("error" => $error, "lastUserName" => $lastUsername));
+    }
+
+    /**
+     * @Route(path="/logout", name = "logout")
+     */
+    public function logout() {
+
     }
 }

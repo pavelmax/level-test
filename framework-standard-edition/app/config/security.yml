@@ -3,36 +3,23 @@
 security:
     encoders:
         AppBundle\Entity\Users:
-            algorithm: bcrypt
+            algorithm: sha512
+            encode-as-base64: true
+            iterations: 10
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-            our_db_provider:
-                entity:
-                    class: AppBundle:Users
-                    property: cusername
+            main:
+              entity: { class: AppBundle:Users, property: cidentificator }
+
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
         main:
-            anonymous: ~
-            provider: our_db_provider
-            form_login:
-              login_path: login
-              check_path: login
+          pattern: /.*
+          form_login:
+            check_path: /login
+            login_path: /login
+          logout: true
+          security: true
+          anonymous: true
 
-            # activate different ways to authenticate
-
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
-
-    access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_ADMIN }

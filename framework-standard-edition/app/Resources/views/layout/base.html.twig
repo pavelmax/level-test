@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title%}Тестирование персонала{% endblock %}</title>
     {% block styles %}<link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">{% endblock %}
+    {% block javascripts %}
+        <script src="{{ asset("js/jquery.min.js") }}"></script>
+    {% endblock %}
 </head>
 <body>
 <style>
@@ -17,7 +20,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar-top">
-        <a class="navbar-brand" href="#home"><img src="{{ asset("img/logo.png") }}" width="80" height="80" alt="Тестирование персонала"> Тестирование персонала</a>
+        <a class="navbar-brand" href="{{ path("home") }}"><img src="{{ asset("img/logo.png") }}" width="80" height="80" alt="Тестирование персонала"> Тестирование персонала</a>
         {% block topMenu %}
 
         {% endblock %}
